@@ -1,2 +1,2 @@
 # pullrequest-checks
-test
+Automated checks and validations for pull requests.
