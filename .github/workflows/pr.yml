@@ -1,0 +1,29 @@
+name: Pull Request Check
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: $
+          fetch-tags: true
+      - name: Setup Go
+        uses: actions/setup-go@v4.1.0
+        with:
+          go-version: "1.24"
+          cache: false
+      - name: Install Dependencies
+        run: |
+          sudo apt install -y jq
+          go install github.com/playwright-community/playwright-go/cmd/playwright@latest
+          playwright install --with-deps chromium
+      - name: Execute tests
+        env:
+          HEADLESS_BROWSER: $
+        run: go test -v ./..
