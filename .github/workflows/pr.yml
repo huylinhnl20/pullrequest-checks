@@ -1,28 +1,15 @@
-name: Pull Request Check
-on:
-  pull_request:
-    branches:
-      - main
+name: CI
+
+on: [push, pull_request]
+
 jobs:
-  check:
-    runs-on: ubuntu-24.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout latest code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-      - name: Setup Go
-        uses: actions/setup-go@v4.1.0
-        with:
-          go-version: "1.24"
-          cache: false
-      # - name: Install Dependencies
-      #   run: |
-      #     sudo apt install -y jq
-      #     go install github.com/playwright-community/playwright-go/cmd/playwright@latest
-      #     playwright install --with-deps chromium
-      # - name: Execute tests
-      #   env:
-      #     HEADLESS_BROWSER: $
-      #   run: go test -v ./..
+    - uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - run: npm install
+    - run: npm test
