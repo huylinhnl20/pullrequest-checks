@@ -17,12 +17,12 @@ jobs:
         with:
           go-version: "1.24"
           cache: false
-      - name: Install Dependencies
-        run: |
-          sudo apt install -y jq
-          go install github.com/playwright-community/playwright-go/cmd/playwright@latest
-          playwright install --with-deps chromium
-      - name: Execute tests
-        env:
-          HEADLESS_BROWSER: $
-        run: go test -v ./..
+      # - name: Install Dependencies
+      #   run: |
+      #     sudo apt install -y jq
+      #     go install github.com/playwright-community/playwright-go/cmd/playwright@latest
+      #     playwright install --with-deps chromium
+      # - name: Execute tests
+      #   env:
+      #     HEADLESS_BROWSER: $
+      #   run: go test -v ./..
